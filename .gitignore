@@ -28,6 +28,7 @@ hs_err_pid*
 ### Processing ###
 .DS_Store
 applet
+build-tmp
 application.linux32
 application.linux64
 application.windows32
