@@ -1,4 +1,5 @@
 import peasy.*;
+import java.util.*;
 
 Voxel v[];
 int maxWidth, maxHeight, maxDepth = 0;
@@ -10,22 +11,24 @@ void setup(){
 	surface.setResizable(true);
 	println("Loading...");
 	v = new Voxel[]{
-		new Voxel("../../models/0001.json"),
-		new Voxel("../../models/0002.json"),
-		new Voxel("../../models/0003.json"),
-		new Voxel("../../models/0004.json"),
-		new Voxel("../../models/0005.json"),
-		new Voxel("../../models/0006.json"),
-		new Voxel("../../models/0007.json"),
-		new Voxel("../../models/0008.json"),
-		new Voxel("../../models/0009.json"),
-		new Voxel("../../models/0010.json"),
-		new Voxel("../../models/0011.json"),
-		new Voxel("../../models/0013.json"),
-		new Voxel("../../models/0015.json"),
-		new Voxel("../../models/0016.json"),
-		new Voxel("../../models/0018.json"),
-		new Voxel("../../models/0019.json")
+		new Voxel("0001.json"),
+		new Voxel("0002.json"),
+		new Voxel("0003.json"),
+		new Voxel("0004.json"),
+		new Voxel("0005.json"),
+		new Voxel("0006.json"),
+		new Voxel("0007.json"),
+		new Voxel("0008.json"),
+		new Voxel("0009.json"),
+		new Voxel("0010.json"),
+		new Voxel("0011.json"),
+		new Voxel("0012.json"),
+		new Voxel("0013.json"),
+		new Voxel("0014.json"),
+		new Voxel("0015.json"),
+		new Voxel("0016.json"),
+		new Voxel("0017.json"),
+		new Voxel("0018.json")
 	};
 
 	for (int i = 0; i < v.length; i++) {
@@ -56,11 +59,20 @@ void setup(){
 }
 
 void draw(){
+	boolean repopulate = false;
 	if(keyPressed && key == ' '){
 		blockX = (int) random(10, 20);
 		blockY = (int) random(10, 40);
 		blockZ = (int) random(8, 30);
 		offset = (int) random(v.length);
+		repopulate = true;
+
+		println("___________");
+		println("");
+		println("");
+		println("");
+		println("");
+		println("___________");
 	}
 
 	background(200);
@@ -68,11 +80,14 @@ void draw(){
 		for(int y = -maxHeight/2; y < maxHeight/2; y++){
 			for(int z = -maxDepth/2; z < maxDepth/2; z++){
 				int pick = (int) (maxDepth+maxHeight+maxWidth+((x/blockX)+(y/blockY)+(z/blockZ))+offset) % v.length;
-				if(v[pick].get(x, y, z)){
+				if(v[8].get(x, y, z)){
 					pushMatrix();
 					translate(x*10, -y*10, z*10);
 					box(10);
 					popMatrix();
+					if(repopulate){
+						println(x+" "+y+" "+z);
+					}
 				}
 			}
 		}
