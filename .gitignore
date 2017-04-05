@@ -1,4 +1,8 @@
+# don't include source files and extracted polygon meshes
+data/sources
+data/unprocessed
 
+.sync
 # Created by https://www.gitignore.io/api/sublimetext,python,processing,java
 
 ### Java ###
