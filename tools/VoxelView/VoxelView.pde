@@ -43,7 +43,7 @@ void draw(){
 	line(0,0,0,0, -100, 0);
 	stroke(0, 0, 200);
 	line(0,0,0,0, 0, 100);
-	stroke(40);
+	stroke(20);
 	if(flaggedRemoval)
 		stroke(155,0,0);
 
@@ -51,9 +51,9 @@ void draw(){
 		PVector p[] = v.points;
 		for(int i = 0; i < p.length; i++){
 			if(p[i] != null)
-				point(p[i].x*120,
-				      -p[i].y*120,
-				      p[i].z*120);
+				point(p[i].x*1200,
+				      -p[i].y*1200,
+				      p[i].z*1200);
 		} 
 	}
 }
