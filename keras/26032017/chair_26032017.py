@@ -23,7 +23,7 @@ def choose(choices):
     print(choices[ans])
     return choices[ans]
 
-INPUT_DIR = "../../data/preprocessed_samples"
+INPUT_DIR = "../../data/preprocessed_low"
 # INPUT_DIR = "../../data/preprocessed"
 print("Include normals ?")
 INCLUDE_NORMALS = choose((False, True))
@@ -55,7 +55,7 @@ def getsplit(number, ratio):
 
     return train, test
 
-def loadX(folder):
+def loadData(folder):
 
     X = []
     max_dim = 0
@@ -71,22 +71,27 @@ def loadX(folder):
                     max_dim = max(max_dim, len(x))     
                     X.append(x)
 
-    max_dim -= max_dim % 2 + 4
+    max_dim -= max_dim % 2 
+    out_dim = 6444
 
-    X = [reshape(x,max_dim) for x in X]
+    print("Reshaping X...")
+    X = [reshape(v,max_dim) for v in X]
+
+    print("Reshaping Y...")
+    Y = [reshape(v,out_dim) for v in X]
 
     train, test = getsplit(len(X), TESTTRAIN_RATIO)
 
     print("Splitting "+str(train)+"/"+str(test))
 
-    return np.stack(X[:train]), np.stack(X[-test:])
+    return np.stack(X[:train]), np.stack(X[-test:]), np.stack(Y[:train]), np.stack(Y[-test:])
 
 print("Loading "+INPUT_DIR)
 
-X, T = loadX(INPUT_DIR) 
+X, XT, Y, YT = loadData(INPUT_DIR) 
 
-print("TRAIN : " + str(X.shape))
-print("TEST :  " + str(T.shape))
+print("TRAIN : " + str(X.shape)+" " + str(Y.shape))
+print("TEST :  " + str(XT.shape)+" " + str(YT.shape))
 
 print("Defining model...")
 input_pc = Input(shape=(X.shape[1], X.shape[2]))  # adapt this if using `channels_first` image data format
@@ -106,18 +111,45 @@ x = Conv1D(8, 3, activation='relu')(x)
 x = UpSampling1D(2)(x)
 x = Conv1D(16, 3, activation='relu')(x)
 x = UpSampling1D(2)(x)
-decoded = Conv1D(3, 1, activation='sigmoid', padding='same')(x)
-# decoded  = ZeroPadding1D(3)(decoded)
+x = Conv1D(X.shape[2], 3, activation='linear', padding='same')(x)
+decoded = BatchNormalization(axis=2)(x)
+
 
 autoencoder = Model(input_pc, decoded)
+print(autoencoder.summary())
 print("Compiling model...")
 autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
 
 print("Begining fitting.")
-autoencoder.fit(X, X,
+autoencoder.fit(X, Y,
                 epochs=50,
-                batch_size=T.shape[0],
+                batch_size=XT.shape[0],
                 shuffle=True,
-                validation_data=(T, T))
+                validation_data=(XT, YT))
 
-autoencoder.save('untrained_'+time.strftime("%Y%m%d-%H")+str(X.shape)+'.h5')
+autoencoder.save('trained_'+time.strftime("%Y%m%d-%H")+str(X.shape)+'.h5')
+
+def save_coordinates_xyz(coords):
+    files = {}
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+
+    if len(coords.shape) == 3:
+        index = 0
+        for f in coords: 
+            files[timestr+"."+str(index)] = f
+            index+=1
+    elif len(coords.shape) == 2:
+        files[timestr] = coords
+
+    for file, data in files.items():
+        with open(file+".xyz", 'w') as outfile:
+            for coord in data:
+                d = ' '.join(['%.10f' % v for v in coord])
+                outfile.write(d+'\n')
+        
+
+chairs = autoencoder.predict(XT)
+
+print(str(chairs.shape))
+
+save_coordinates_xyz(chairs)
