@@ -28,6 +28,7 @@ def process_xyz(input_file, output_file):
     # scale everything uniformly so maxY == 1s
     try:
         with open(input_file) as i, open(output_file, 'w') as o:
+            out = []
             # bounding box
             maxd = [0,0,0]
             mind = [0,0,0]
@@ -58,7 +59,8 @@ def process_xyz(input_file, output_file):
                     data.append('%.10f' % ((v+correction[i%3])/scale))
                     i+=1
 
-                o.write(' '.join(data)+'\n')
+                out.append(' '.join(data))
+            o.write('\n'.join(out))
         os.remove(input_file)
     except Exception as e:
         if(verbose):
