@@ -37,6 +37,9 @@ void draw(){
 
 	background(200);
 
+	if(files !=  null)
+		text(files.get(currentFile), 100, 100);
+
 	stroke(200, 0, 0);
 	line(0,0,0,100, 0, 0);
 	stroke(0, 200, 0);

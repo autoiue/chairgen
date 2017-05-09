@@ -1,15 +1,21 @@
 """
-    usage: modelFinder.py [INPUT_DIR] [OUTPUT_DIR]
+    usage: import.py [-h] [-s SCRIPT] [-v] [-S] [-l LENGTH] -i [INPUT] -o [OUTPUT]
 
-    Recursively find all .obj or .stl files in INPUT_DIR and convert them to .xyz file then put it in OUTPUT_DIR
+    -h : print help message
+    -s : script to apply (default: "import_poisson.mlx")
+    -v : verbose
+    -S : sort output file points
+    -l : target number of points in output files
 
 """
 
 import argparse
 import io, os
 import subprocess
+from operator import itemgetter
 
 verbose = False
+sort = False
 script = ''
 
 supported_ext = ['.3ds', '.aln', '.apts', '.asc', '.da', '.gts', '.obj', '.off', '.ply', '.pts', '.ptx', '.stl', '.tri', '.v3d', '.vrml', '.x3dv', '.x3d']
@@ -51,6 +57,10 @@ def process_xyz(input_file, output_file):
             scale = maxd[0]-mind[0]
             correction = (-mind[0]-scale/2, -mind[1], -mind[2]-(maxd[2]-mind[2])/2)
             # scale based on y dimensions
+            
+            #sort on y coord:
+            if sort:
+                coords.sort(key=itemgetter(1))
 
             for c in coords:
                 data = []
@@ -82,7 +92,10 @@ def find(input_dir, output_dir):
             fname, ext = os.path.splitext(file_path)
             ext = ext.lower()
             if(ext in ['.xyz', '.json']):
-                next_id = max(next_id, int(os.path.basename(fname)))
+                try:
+                    next_id = max(next_id, int(os.path.basename(fname)))
+                except Exception as e:
+                    pass
 
     next_id += 1
     print("Next ID: "+ str(next_id))
@@ -99,6 +112,11 @@ def find(input_dir, output_dir):
                 process_xyz(os.path.join(output_dir, format(next_id, '05d')+".temp.xyz"),os.path.join(output_dir, format(next_id, '05d')+".xyz"))
                 next_id += 1
 
+def check_positive(value):
+    ivalue = int(value)
+    if ivalue <= 0:
+         raise argparse.ArgumentTypeError("%s is an invalid positive int value" % value)
+    return ivalue
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Recursively find all meshfiles then convert it to .xyz pointcloud')
@@ -107,11 +125,16 @@ if __name__ == '__main__':
 
     requiredNamed.add_argument('-s', '--script')
     parser.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+    parser.add_argument('-S', '--sort', dest='sort', action='store_true')
+    parser.add_argument('-l', '--length', dest='length', type=check_positive)
     parser.set_defaults(script='import_poisson.mlx')
     parser.set_defaults(verbose=False)
+    parser.set_defaults(sort=False)
     requiredNamed.add_argument('-i', '--input', nargs='?', required=True)
     requiredNamed.add_argument('-o', '--output', nargs='?', required=True)
     args = parser.parse_args()
     verbose = args.verbose
+    sort = args.sort
+    length = args.length
     script = args.script
     find(args.input, args.output)
