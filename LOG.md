@@ -2,9 +2,9 @@
 
 #### Avancée au 8 mars
 
-- Installation des librairies de machine learning sur l'ordinateur ENSADLAB dédié au Machine Learning
-- Collection de 20 modèles de chaises (collection)
-- Esquisse : chaise mixée (code Processing)
+- Installation des librairies de machine learning sur l'ordinateur ENSADLAB dédié au Machine Learning : [Keras](https://keras.io/)
+- Collection de 20 modèles de chaises ([collection](https://github.com/pr0csynth/chairgen/tree/master/data/preprocessed)) 
+- Esquisse : chaise mixée ([VoxelMix](https://github.com/pr0csynth/chairgen/tree/master/tools/VoxelView))
 
 ![Modèle voxel d'une chaise](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot%20from%202017-02-22%2014-58-38.png)
 
@@ -12,7 +12,7 @@
 
 #### Avancée au 15 mars
 
-- Visualiseur 3D pour les voxels
+- Visualiseur 3D pour les voxels : [VoxelView](https://github.com/pr0csynth/chairgen/tree/master/tools/VoxelView)
 - Maîtrise de la mise en forme de données en tableaux multidimensionels (avec Keras + TensorFlow + Numpy)
 - Premier résultat du programme de machine learning : je ne maitrise pas du tout cette technologie, je suis bloqué et ai commencé a faire appel à des experts
 - Premier contact avec une directrice de laboratoire à l'INRIA, livre blanc de l'INRIA sur l'IA
@@ -21,9 +21,9 @@
 
 #### Avancé au 22 mars
 
-- Changement de stratégie pour la représentation de chaise (Voxels vs random points on surface) (65k points par modèle)
-- Changement de stratégie pour le type de NN : à tester : autoencoders et Variational AutoEncoder (VAE)
-- Openscad à la rescousse pour la production de modèles STL imprimables à partir de voxels. (trois chaises imprimables/4 pour le 29) (28 minutes de rendu pour 15k points).
+- Changement de stratégie pour la représentation de chaise (Voxels vs random points on surface) (50k points par modèle)
+- Changement de stratégie pour le type de NN : à tester : autoencoders et Variational AutoEncoder ([VAE](https://github.com/pr0csynth/chairgen/blob/master/keras/20032017/chair_20032017.py))
+- [Openscad à la rescousse pour la production de modèles STL imprimables à partir de voxels](https://github.com/pr0csynth/chairgen/blob/master/results/chair_SD.scad). (trois chaises imprimables/4 pour le 29) (28 minutes de rendu pour 15k points).
 
 #### Avancé au 9 mai
 
