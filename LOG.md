@@ -5,9 +5,10 @@
 - Installation des librairies de machine learning sur l'ordinateur ENSADLAB dédié au Machine Learning
 - Collection de 20 modèles de chaises (collection)
 - Esquisse : chaise mixée (code Processing)
-![Modèle voxel d'une chaise](/home/procsynth/LOCALDEV/CyberChair/results/images/Screenshot from 2017-02-22 14-58-38.png)
 
-![Esquisse de ce que pourrais donner un tel programme](/home/procsynth/LOCALDEV/CyberChair/results/images/Screenshot from 2017-03-08 13-41-32.png)
+![Modèle voxel d'une chaise](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot%20from%202017-02-22%2014-58-38.png)
+
+![Esquisse de ce que pourrais donner un tel programme](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot%20from%202017-03-08%2013-41-32.png)
 
 #### Avancée au 15 mars
 
@@ -16,7 +17,7 @@
 - Premier résultat du programme de machine learning : je ne maitrise pas du tout cette technologie, je suis bloqué et ai commencé a faire appel à des experts
 - Premier contact avec une directrice de laboratoire à l'INRIA, livre blanc de l'INRIA sur l'IA
 
-![Premier résulat innatendu du programme](/home/procsynth/LOCALDEV/CyberChair/results/images/Screenshot from 2017-03-09 14-59-17.png)
+![Premier résulat innatendu du programme](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot%20from%202017-03-09%2014-59-17.png)
 
 #### Avancé au 22 mars
 
@@ -41,11 +42,11 @@ Le point cloud s'apparente au voxel, mais il les pas aligné sur une grille. La 
 
 On imagine ensuite que le réseau de neurone puisse ensuite travailler avec ce format de donner pour sortir des données du même format. Il se pose donc la question de la reconstruction d'un modèle polygonal pour un traitement ultérieur (impression, fraisage, ...). Il est possible d'utiliser la technique "classique" utilisée pour les scans 3D ou photogramétrie : la technique de reconstruction Poisson. Je n'ai pas eu de grand succès avec mais les formes et matières générées sont intéressantes.
 
-![Reconstruction Poisson sur une assise](/home/procsynth/LOCALDEV/CyberChair/results/images/Screenshot-from-2017-03-19-19-28-51.png)
+![Reconstruction Poisson sur une assise](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot-from-2017-03-19-19-28-51.png)
 
 Je me suis orienté vers un reconsctruction plus simple qui consiste à remplacer chaque point par une forme géométrique 3D unique. Selon les assymétrie de cet "atome", on obtiens plusieurs effets de matière dépendant de l'orientation des surfaces.
 
-![Reconstruction simple sur une assise](/home/procsynth/LOCALDEV/CyberChair/results/images/Screenshot from 2017-05-08 23-08-49.png)
+![Reconstruction simple sur une assise](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot%20from%202017-05-08%2023-08-49.png)
 
 
 ## Références
@@ -81,4 +82,6 @@ quel vision pour le ML ?
 
 revenir sur l'intention de départ transition du travail
 
-décrire le futur ? Faire le premir pas, vers le futur ,maitriser le chemin comment, abbérations ? vers un monde idéal-->
+décrire le futur ? Faire le premir pas, vers le futur ,maitriser le chemin comment, abbérations ? vers un monde idéal
+
+-->
