@@ -33,12 +33,15 @@ Il me semble donc plus intéressant de travailler sur la représentation des don
 
 Un premier essai pour ce {format volumétrique} était de représenter sur une grille 3D la présence ou l'absence de matière (à la manière de Minecraft) : les voxels. Cette solution présente plusieurs inconvénients et pas énormément d'avantages.
 
-Bien qu'existant en version manuelle, je n'ai pas pu trouver d'outil permettant de traiter de grande quantité de données (l'idée étant d'avoir ~1000 modèles 3D pour entraîner un réseau de neurone).
-Plus on désire de resolution, plus on affine la grille. Hors comme on travaille en 3D, pour doubler la résolution, il faut multiplier par 8 (2^3) le nombre de donnée ( 32 x 32 x 32 = 8 x (16 x 16 x 16) ). Les calcul deviennent vite très longs.
-Ce qui rend difficile le travaille des courbes, les reconstruction VOXEL > POLY ne sont pas "smooth". Le crénelage est inévitable. Ça peut être un style, mais je préfererais une technique me laissant le choix.
-Le voxel sont codés en 0 ou 1, alors que  les réseau de neurone travaillent de 0 à 1. Il y a une perte de performance, aussi bien à l'affichage qu'au traitement.
+ - Bien qu'existant en version manuelle, je n'ai pas pu trouver d'outil permettant de traiter de grande quantité de données (l'idée étant d'avoir ~1000 modèles 3D pour entraîner un réseau de neurone).
+ - Plus on désire de resolution, plus on affine la grille. Hors comme on travaille en 3D, pour doubler la résolution, il faut multiplier par 8 (2^3) le nombre de donnée ( 32 x 32 x 32 = 8 x (16 x 16 x 16) ). Les calcul deviennent vite très longs.
+- - Ce qui rend difficile le travaille des courbes, les reconstruction VOXEL > POLY ne sont pas "smooth". Le crénelage est inévitable. Ça peut être un style, mais je préfererais une technique me laissant le choix.
+ - Le voxel sont codés en 0 ou 1, alors que  les réseau de neurone travaillent de 0 à 1. Il y a une perte de performance, aussi bien à l'affichage qu'au traitement.
+ 
 Je suis donc plutôt parti sur une solution qui conserve les courbes quelque soit la résolution et qui en plus ne nécessite pas de modéles rigoureusement  "water tight" pour tirer des donnés de bonne qualité : le POINT CLOUD.
 Le point cloud s'apparente au voxel, mais il les pas aligné sur une grille. La méthode utilisée pour générer ce POINT CLOUD est de placer un point sur la surface polygonales puis d'en placer successivement à une certaine distance prédéterminée, à un angle au hasard. On obtient une liste de points répartis de manière homogène et organique sur la surface. On obtiens alors un tableau en deux dimensions (index, coordonnées) de forme (nb_points, 3 ou 6) ce qui est plus proche de ce que peut gérer un réseau de neurone.
+
+![Représentation en nuage de point](https://github.com/pr0csynth/chairgen/raw/master/results/images/Screenshot%20from%202017-05-10%2010-30-15.png)
 
 On imagine ensuite que le réseau de neurone puisse ensuite travailler avec ce format de donner pour sortir des données du même format. Il se pose donc la question de la reconstruction d'un modèle polygonal pour un traitement ultérieur (impression, fraisage, ...). Il est possible d'utiliser la technique "classique" utilisée pour les scans 3D ou photogramétrie : la technique de reconstruction Poisson. Je n'ai pas eu de grand succès avec mais les formes et matières générées sont intéressantes.
 
