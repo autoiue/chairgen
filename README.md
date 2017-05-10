@@ -15,3 +15,30 @@ You will find tools scripts in the `tools` folder. They are used to convert data
 |:-----------------:|--------------------------|-----------|-------------------------|------------------------|
 |[Photoscan](http://www.agisoft.com/)| `ToPointCloud_MeshLab/import.py` | all files in `keras/`  | `ToPoly_Scad/export.py` | [Cura](https://ultimaker.com/en/products/cura-software), etc. |
 |                   |       VoxelView,         |  VoxelMix  |         |                        |
+
+### ToPointCloud_MeshLab/import.py
+
+This script will recursively find every compatible polygonal files in an input folder to convert it to point cloud files.
+
+
+    usage: import.py [-h] [-s SCRIPT] [-v] [-S] -i [INPUT] -o [OUTPUT]
+
+    -h : print help message
+    -s : script to apply (default: "import_poisson.mlx", 50000 points)
+    -v : verbose (without it it will fail silently)
+    -S : sort points
+
+
+This script require Python 3 and Meshlab.
+
+### ToPoly_Scad/export.py
+
+This script will recursively find every `.yxz` files in an input folder to convert it to `.scad`.
+
+    usage: export.py [-h] [-s SCRIPT] -i [INPUT] -o [OUTPUT]
+
+    -h : print help message
+    -s : script to apply (default: "voxels.scad"), this file should contain at least "module atom(x, y, z){}"
+    
+
+This script require Python 3 (not OpenScad).
